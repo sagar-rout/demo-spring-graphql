@@ -26,6 +26,6 @@ public class Post {
     @Column(nullable = false)
     private String category;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Author author;
 }

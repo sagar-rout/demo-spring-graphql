@@ -3,12 +3,15 @@ package com.example.demospringgraphql;
 import com.example.demospringgraphql.author.Author;
 import com.example.demospringgraphql.author.AuthorRepository;
 import com.example.demospringgraphql.post.Post;
+import com.example.demospringgraphql.post.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
@@ -42,4 +45,14 @@ class AppStartupRunner implements ApplicationRunner {
     }
 }
 
+@Controller
+class PostGraphqlController {
 
+    @Autowired
+    private PostRepository postRepository;
+
+    @SchemaMapping(typeName = "Query", field = "recentPosts")
+    public List<Post> getRecentPosts() {
+        return postRepository.findAll();
+    }
+}
